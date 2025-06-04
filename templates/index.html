@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación Inclusiva</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, button {
+            font-size: 1rem;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Tareas</h1>
+        <form method="post" aria-label="Agregar nueva tarea">
+            <label for="task">Tarea:</label>
+            <input type="text" id="task" name="task" required aria-required="true" />
+            <button type="submit">Agregar</button>
+        </form>
+        <ul>
+            {% for t in tasks %}
+            <li>{{ t }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
