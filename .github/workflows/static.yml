@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kit de Medios con IA - Juan Ma Perals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* bg-slate-50 */
+        }
+        .brand-gradient {
+            background: linear-gradient(to right, #2563eb, #4f46e5); /* Azul a Indigo */
+        }
+        .brand-gradient-text {
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #2563eb, #4f46e5);
+        }
+        .section-card {
+            background-color: white;
+            border-radius: 1.5rem; /* rounded-2xl */
+            padding: 2rem; /* p-8 */
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            margin-bottom: 3rem; /* mb-12 */
+            scroll-margin-top: 100px;
+        }
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 2rem;
+            align-items: center;
+        }
+        .logo-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        .logo-item:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+        .logo-item img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+        .list-item-card {
+            background-color: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .list-item-card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .list-item-card img {
+            height: 40px;
+            width: 40px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+        .nav-link {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .nav-link.active {
+            background-color: #3b82f6;
+            color: white;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        /* Estilos para el Modal */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        /* Animación de carga */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <!-- Barra de Navegación Fija -->
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-slate-900">Juan Ma Perals</h1>
+            <nav id="main-nav" class="hidden md:flex items-center gap-2">
+                <a href="#bio" class="nav-link">Biografía</a>
+                <a href="#rankings" class="nav-link">Rankings</a>
+                <a href="#proyectos" class="nav-link">Proyectos</a>
+                <a href="#colaboraciones" class="nav-link">Colaboraciones</a>
+                <a href="#publicaciones" class="nav-link">Publicaciones</a>
+                <a href="#reconocimientos" class="nav-link">Reconocimientos</a>
+                <a href="#herramientas" class="nav-link">Herramientas</a>
+                <a href="#contacto" class="nav-link">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container mx-auto p-4 md:p-8 max-w-6xl">
+
+        <!-- Cabecera -->
+        <header class="text-center mb-12">
+            <div class="inline-block p-2 bg-white rounded-full shadow-xl mb-6">
+                <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751289320/download_10_izp60w.webp" alt="Foto de perfil de Juan Ma Perals" class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-blue-200" style="object-position: top;" onerror="this.onerror=null;this.src='https://placehold.co/160x160/e2e8f0/4a5568?text=JMP';">
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold text-slate-900">Juan Ma Perals</h1>
+            <p class="text-lg md:text-xl text-blue-700 font-semibold mt-3 max-w-3xl mx-auto">
+                Experto Evaluador, Comisión Europea | Cybersecurity & AI | EdTech Mentor | Fundador y Director de CiberUnidos
+            </p>
+        </header>
+
+        <!-- Biografía Profesional -->
+        <section id="bio" class="section-card">
+            <div class="flex justify-between items-start">
+                <h2 class="text-3xl font-bold mb-6 brand-gradient-text">Biografía Profesional</h2>
+                <button id="generateSocialPostBtn" class="ml-4 flex-shrink-0 bg-blue-100 text-blue-700 font-semibold py-2 px-4 rounded-lg shadow-sm hover:bg-blue-200 transition duration-300">
+                    ✨ Generar Post
+                </button>
+            </div>
+            <p id="bio-text" class="text-slate-600 leading-relaxed mb-4">
+                Soy Juan Ma Perals, experto evaluador para la Comisión Europea en ciberseguridad, inteligencia artificial y tecnología educativa. Fundador y director de CiberUnidos, mentor oficial en INCIBE y Sherpa Tribe, colaboro con gobiernos, empresas líderes y aceleradoras tecnológicas, guiando la transformación digital y el desarrollo de talento en Europa y Latinoamérica. He sido distinguido como Educador Certificado por Google y recibido los principales reconocimientos de Microsoft por mi impacto en formación innovadora y divulgación. Colaboro y creo contenido especializado con Microsoft, Google, Palo Alto Networks, XM Cyber, Team Cymru, JupiterOne, TÜV Rheinland, AI & Partners, Volvo España, entre otros.
+            </p>
+        </section>
+
+        <!-- Rankings Destacados -->
+        <section id="rankings" class="section-card">
+            <h2 class="text-3xl font-bold mb-6 brand-gradient-text">Rankings Destacados (Favikon)</h2>
+            <div class="text-center mb-8">
+                <p class="text-slate-600 leading-relaxed max-w-3xl mx-auto">
+                    Reconocido consistentemente por Favikon como una de las <strong>voces más influyentes</strong> en el sector tecnológico, alcanzando la <strong>primera posición en España y a nivel mundial de habla hispana</strong> en Ciberseguridad y EdTech en diferentes ocasiones.
+                </p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751307176/8_del_mundo_en_ciberseguridad_linkedin_favikon_xyi33y.png" alt="Ranking 8 del mundo en ciberseguridad por Favikon" class="rounded-lg shadow-lg w-full border">
+                <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751307176/FAVIKON_N%C2%BA1_ESPA%C3%91A_CIBERSEGURIDAD_y8ewch.png" alt="Ranking N1 en España en Ciberseguridad por Favikon" class="rounded-lg shadow-lg w-full border">
+                <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751307176/CREador_contenido_ciberseguridad_numero_1_favikon_linedkin_xijrdf.png" alt="Ranking N1 creador de contenido en Ciberseguridad por Favikon" class="rounded-lg shadow-lg w-full border">
+                <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751307179/1721658250243_uc6osi.jpg" alt="Ranking Favikon" class="rounded-lg shadow-lg w-full border">
+            </div>
+        </section>
+        
+        <div id="proyectos">
+            <!-- CiberUnidos -->
+            <section class="section-card">
+                <h2 class="text-3xl font-bold mb-6 brand-gradient-text">Mi Proyecto Principal: CiberUnidos</h2>
+                <div class="flex flex-col gap-6">
+                    <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751304754/CIBERUNIDOS__Aprendizaje_y_Conexi%C3%B3n_qwzdi8.png" alt="Banner de CiberUnidos" class="rounded-lg shadow-lg w-full">
+                    <div class="flex flex-col md:flex-row items-center gap-6">
+                        <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751304910/ciberunidos_logo_brlmfu.jpg" alt="Logo de CiberUnidos" class="w-24 h-24 rounded-full shadow-md">
+                        <p class="text-slate-600 leading-relaxed flex-grow">
+                            CiberUnidos es mi iniciativa para crear una comunidad de aprendizaje y conexión en el mundo de la ciberseguridad y la tecnología.
+                        </p>
+                        <div class="flex gap-4">
+                             <a href="https://ciberunidos.com" target="_blank" rel="noopener noreferrer" class="inline-block bg-blue-600 text-white font-bold py-2 px-6 rounded-full text-md shadow-lg transform hover:scale-105 transition-transform duration-300">
+                                Visitar Web
+                            </a>
+                             <a href="https://www.linkedin.com/company/105098944" target="_blank" rel="noopener noreferrer" class="inline-block bg-slate-200 text-slate-800 font-bold py-2 px-6 rounded-full text-md shadow-lg transform hover:scale-105 transition-transform duration-300">
+                                LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Evento Destacado: INCIBE -->
+            <section class="section-card">
+                <h2 class="text-3xl font-bold mb-6 brand-gradient-text">Evento Destacado: Mentor en Ciberseguridad</h2>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <p class="text-slate-600 leading-relaxed mb-4">
+                           Como <strong>Mentor Oficial</strong> para <strong>Incibe Emprende</strong>, colaboro activamente en eventos y programas de aceleración para startups de ciberseguridad, como este organizado por <strong>Sherpa Tribe</strong>.
+                        </p>
+                        <p class="text-slate-600 leading-relaxed">
+                            Mi rol es guiar y apoyar a los nuevos talentos, aportando mi experiencia para fortalecer el ecosistema emprendedor en un sector tan crítico y de futuro.
+                        </p>
+                        <div class="flex gap-4 mt-6">
+                            <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751315943/descarga_5_usrufo.png" alt="Logo Institucional INCIBE" class="h-12">
+                            <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751315943/descarga_5_lt5d81.jpg" alt="Logo Sherpa Tribe" class="h-12">
+                        </div>
+                    </div>
+                    <div>
+                         <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751315944/42665c1f-a6db-445b-8ebd-fe31df0ed1bb-2_t9vegg.jpg" alt="Juan Ma Perals como mentor en evento de ciberseguridad" class="rounded-lg shadow-lg w-full">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Evento Destacado: Colombia -->
+            <section class="section-card">
+                <h2 class="text-3xl font-bold mb-6 brand-gradient-text">Evento Destacado: IA para la Agricultura</h2>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <p class="text-slate-600 leading-relaxed mb-4">
+                            Invitado por el <strong>Gobierno de Colombia</strong>, tuve el honor de presentar una conferencia sobre la aplicación de la <strong>Inteligencia Artificial en la Agricultura</strong>.
+                        </p>
+                        <p class="text-slate-600 leading-relaxed">
+                            El evento se celebró en la prestigiosa <strong>sede central de Microsoft en Colombia</strong>, un marco incomparable para discutir el futuro de la tecnología en sectores clave y su impacto en la sostenibilidad y la eficiencia.
+                        </p>
+                        <a href="https://www.linkedin.com/feed/update/urn:li:activity:7086664986734829568?updateEntityUrn=urn%3Ali%3Afs_feedUpdate%3A%28V2%2Curn%3Ali%3Aactivity%3A7086664986734829568%29" target="_blank" rel="noopener noreferrer" class="inline-block bg-blue-100 text-blue-700 font-semibold py-2 px-4 rounded-lg shadow-sm hover:bg-blue-200 transition duration-300 mt-4">Ver más</a>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 h-48 md:h-64">
+                        <div class="rounded-lg shadow-lg bg-cover bg-center w-full h-full" style="background-image: url('https://res.cloudinary.com/dwhdevibb/image/upload/v1751317225/1689065799521_fol9zf.jpg');">
+                            <span class="sr-only">Juan Ma Perals durante la conferencia sobre IA y Agricultura</span>
+                        </div>
+                        <div class="rounded-lg shadow-lg bg-cover bg-center w-full h-full" style="background-image: url('https://res.cloudinary.com/dwhdevibb/image/upload/v1751317224/1689065799545_dezul0.jpg');">
+                             <span class="sr-only">Exposición en la sede de Microsoft Colombia</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Evento Destacado: SUNAT -->
+            <section class="section-card">
+                <h2 class="text-3xl font-bold mb-6 brand-gradient-text">Reconocimiento Destacado: Conferencia SUNAT</h2>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <p class="text-slate-600 leading-relaxed mb-4">
+                            Profundamente honrado de recibir este certificado oficial del <strong>Instituto Aduanero y Tributario del SUNAT</strong> por mi ponencia <strong>"Ciberseguridad optimizada con Inteligencia Artificial para sostenibilidad y productividad"</strong>.
+                        </p>
+                        <p class="text-slate-600 leading-relaxed">
+                            La conferencia, seguida por más de <strong>1000 personas</strong>, fue un espacio increíble de aprendizaje y colaboración. Mi más sincero agradecimiento a la organización por su confianza e invitación.
+                        </p>
+                    </div>
+                    <div>
+                        <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751300677/Sunat_carta_agradecimineto_pk1aci.png" alt="Carta de agradecimiento de SUNAT" class="rounded-lg shadow-lg w-full border">
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="colaboraciones">
+            <!-- Colaboraciones con Cyfluencer -->
+            <section class="section-card">
+                <h2 class="text-3xl font-bold mb-8 brand-gradient-text flex items-center gap-4">
+                    Colaboraciones vía <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751316076/descarga_6_rgt4br.jpg" alt="Logo de Cyfluencer" class="h-12">
+                </h2>
+                <div class="logo-grid">
+                    <div class="logo-item"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751301815/descarga_e0qba4.png" alt="Logo de JFrog" onerror="this.style.display='none'"></div>
+                    <div class="logo-item"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751303484/snyk-default-featured-image_yl7ggu.png" alt="Logo de Snyk" onerror="this.style.display='none'"></div>
+                    <div class="logo-item"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751303541/adaptiveshield_logo_rykvwy.jpg" alt="Logo de Adaptive Shield" onerror="this.style.display='none'"></div>
+                    <div class="logo-item"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751303618/descarga_1_rekg5q.jpg" alt="Logo de Memcyco" onerror="this.style.display='none'"></div>
+                    <div class="logo-item"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751303721/plurilock_security_solutions_inc_logo_ldfmpk.jpg" alt="Logo de Plurilock" onerror="this.style.display='none'"></div>
+                    <div class="logo-item"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751303806/descarga_3_nw1bpu.png" alt="Logo de Flare" onerror="this.style.display='none'"></div>
+                    <div class="logo-item"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751303911/descarga_4_vp3kar.png" alt="Logo de Cyolo" onerror="this.style.display='none'"></div>
+                    <div class="logo-item"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751315310/descarga_3_mhmtti.jpg" alt="Logo de Palo Alto Networks" onerror="this.style.display='none'"></div>
+                    <div class="logo-item"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751315944/descarga_4_fmjqch.jpg" alt="Logo de otra colaboración con Cyfluencer" onerror="this.style.display='none'"></div>
+                    <div class="logo-item"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751346169/descarga_9_tcjs6x.png" alt="Logo de otra colaboración con Cyfluencer" onerror="this.style.display='none'"></div>
+                    <div class="logo-item"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751346079/descarga_8_vbvhby.png" alt="Logo de otra colaboración con Cyfluencer" onerror="this.style.display='none'"></div>
+                </div>
+            </section>
+
+            <!-- Colaboraciones -->
+            <section class="section-card">
+                <h2 class="text-3xl font-bold mb-8 brand-gradient-text">Otras Colaboraciones y Marcas de Confianza</h2>
+                <div class="logo-grid">
+                    <div class="logo-item"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751289320/1747666210996_mb2lfs.jpg" alt="Logo de Favikon" onerror="this.style.display='none'"></div>
+                    <div class="logo-item"><img src="https://www.xmcyber.com/wp-content/uploads/2022/07/xm-cyber-logo.svg" alt="Logo de XM Cyber" onerror="this.style.display='none'"></div>
+                    <div class="logo-item"><img src="https://thrivedx.com/hubfs/ThriveDX%20Logo.svg" alt="Logo de ThriveDX" onerror="this.style.display='none'"></div>
+                    <div class="logo-item"><img src="https://www.team-cymru.com/hubfs/Team-Cymru-logomark.svg" alt="Logo de Team Cymru" onerror="this.style.display='none'"></div>
+                    <div class="logo-item"><img src="https://www.ironhack.com/assets/logo-ironhack.svg" alt="Logo de Ironhack" onerror="this.style.display='none'"></div>
+                    <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/TUV_Rheinland_logo.svg/1920px-TUV_Rheinland_logo.svg.png" alt="Logo de TÜV Rheinland" onerror="this.style.display='none'"></div>
+                    <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Volvo_wordmark.svg/1200px-Volvo_wordmark.svg.png" alt="Logo de Volvo" onerror="this.style.display='none'"></div>
+                    <div class="logo-item"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751317382/descarga_7_kdbswr.jpg" alt="Logo de RTVE" onerror="this.style.display='none'"></div>
+                     <div class="logo-item"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751318459/descarga_7_jbmgx9.png" alt="Logo de otra colaboración" onerror="this.style.display='none'"></div>
+                </div>
+            </section>
+        </div>
+
+        <div id="publicaciones">
+            <!-- Eventos, Podcasts y Artículos -->
+            <section class="section-card">
+                <h2 class="text-3xl font-bold mb-6 brand-gradient-text">Apariciones en Medios y Publicaciones</h2>
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Eventos -->
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-4">Eventos y Conferencias</h3>
+                        <div class="space-y-4">
+                            <div class="list-item-card"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751317382/descarga_7_kdbswr.jpg" alt="Logo RTVE"><div><strong>RTVE "Aquí hay trabajo":</strong> Entrevista sobre el mercado laboral en ciberseguridad.</div></div>
+                            <div class="list-item-card"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751289318/ironchip_logo_m1eymi.jpg" alt="Logo Ironchip"><div><strong>Webinar Ironchip:</strong> Colaboración sobre seguridad y tecnología.</div></div>
+                            <div class="list-item-card"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751317464/descarga_9_qwggmp.jpg" alt="Logo BCC"><div><strong>Barcelona Cybersecurity Congress:</strong> Influencer y entrevistador.</div></div>
+                            <div class="list-item-card">
+                                <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751289319/1685098498343_k5t7ia.jpg" alt="Logo Actualícese">
+                                <div class="flex-grow">
+                                    <strong>Actualícese:</strong> Participación como ponente.
+                                    <div class="mt-2">
+                                        <a href="https://actualicese.com/como-sumarte-al-impacto-de-la-inteligencia-artificial" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline text-sm mr-4">Leer Artículo</a>
+                                        <a href="https://www.youtube.com/watch?v=gY8ITH9a81o" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline text-sm">Ver Vídeo</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Podcasts -->
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-4">Podcasts y Vídeos</h3>
+                        <div class="space-y-4">
+                            <div class="list-item-card"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751315310/descarga_3_mhmtti.jpg" alt="Logo Palo Alto Networks"><div><strong>Threat Vector:</strong> Insights de hacker sobre privacidad.</div></div>
+                            <div class="list-item-card"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751317583/descarga_10_mzqu7f.jpg" alt="Logo Pioneros For Life"><div><strong>Pioneros For Life:</strong> Explorando la innovación y el futuro.</div></div>
+                            <div class="list-item-card"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751289318/1737489385645_v4gqlc.jpg" alt="Logo CyberSara"><div><strong>CyberSara:</strong> Estado actual de la ciberseguridad y la IA.</div></div>
+                            <div class="list-item-card"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751289318/Un_podcast_seguro_-_Logo_1_1_1_kolkwy.webp" alt="Logo Un Podcast Seguro"><div><strong>Un Podcast Seguro:</strong> Colaboración sobre temas de actualidad.</div></div>
+                            <div class="list-item-card">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/100px-YouTube_full-color_icon_%282017%29.svg.png" alt="Logo YouTube">
+                                <div>
+                                    <strong>Entrevista en YouTube:</strong> Charla sobre ciberseguridad.
+                                    <a href="https://www.youtube.com/watch?v=aEyYF_EC8oA" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline text-sm block mt-1">Ver Vídeo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Artículos -->
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-4">Artículos y Blogs</h3>
+                        <div class="space-y-4">
+                            <div class="list-item-card"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751317808/descarga_6_o5un9o.png" alt="Logo The Keen Folks"><div><strong>The Keen Folks:</strong> "AI Trends: Juan Ma Perals".</div></div>
+                            <div class="list-item-card"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751317678/descarga_11_fo82aq.jpg" alt="Logo Cyberlideria MGZN"><div><strong>Cyberlideria MGZN:</strong> "Seguridad y sostenibilidad".</div></div>
+                            <div class="list-item-card"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751317678/descarga_12_p2umxk.jpg" alt="Logo Ciberseguridad en Línea"><div><strong>Ciberseguridad en Línea:</strong> "Navegando por la Tormenta Digital".</div></div>
+                            <div class="list-item-card">
+                                <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751304083/image_processing20241212-1-7kmmsp_c8b8al.jpg" alt="Logo XM Cyber">
+                                <div class="flex-grow">
+                                    <strong>XM Cyber España:</strong>
+                                    <div class="mt-2 text-sm space-y-1">
+                                        <a href="https://info.xmcyber.com/es/navigating-the-threat-landscape-understanding-exposure-management-pentesting-red-teaming-and-rbvm?utm_source=cybersec&utm_medium=newsfeed" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline block">Gestión de Exposición y Pentesting</a>
+                                        <a href="https://info.xmcyber.com/es/navigating-the-paths-of-risk-the-state-of-exposure-management?utm_source=cybersec&utm_medium=newsfeed" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline block">El Estado de la Gestión de Exposición</a>
+                                        <a href="https://info.xmcyber.com/es/go-beyond-vulnerability-management-with-continuous-threat-exposure-management?utm_source=cybersec&utm_medium=newsfeed" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline block">Más allá de la Gestión de Vulnerabilidades</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="reconocimientos">
+            <!-- Certificaciones -->
+            <section class="section-card">
+                <h2 class="text-3xl font-bold mb-6 brand-gradient-text">Certificaciones y Títulos</h2>
+                 <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg shadow-inner flex items-center gap-6 mb-8">
+                    <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751289319/Dise%C3%B1o_sin_t%C3%ADtulo_41_rasi39.png" alt="Industry-Academy Network EU" class="w-20 h-20 object-contain flex-shrink-0">
+                    <div>
+                        <h3 class="font-bold text-xl text-blue-800">Miembro Académico de INDUSTRY–ACADEMY NETWORK EU</h3>
+                        <p class="text-blue-700 mt-1">Reforzando la conexión entre la industria y el ámbito académico europeo.</p>
+                    </div>
+                </div>
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg shadow-inner flex items-center gap-6 mb-8">
+                    <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751289320/WhatsApp_Image_2025-06-12_at_19.25.05_wgp1xi.jpg" alt="European Commission" class="w-auto h-20 object-contain flex-shrink-0">
+                    <div>
+                        <h3 class="font-bold text-xl text-blue-800">Registro de Grupos de Expertos de la Comisión</h3>
+                        <p class="text-blue-700 mt-1">Miembro del registro oficial de expertos de la Comisión Europea.</p>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="flex items-center gap-4 p-4 bg-slate-50 rounded-lg"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/100px-Microsoft_logo_%282012%29.svg.png" class="h-12 w-12 object-contain" onerror="this.style.display='none'"><div><h3 class="font-semibold">Microsoft MIEE</h3><p class="text-slate-600">Experto en Innovación Digital (2024-2025)</p></div></div>
+                    <div class="flex items-center gap-4 p-4 bg-slate-50 rounded-lg"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/100px-Google_%22G%22_logo.svg.png" class="h-12 w-12 object-contain" onerror="this.style.display='none'"><div><h3 class="font-semibold">Educador Certificado Google</h3><p class="text-slate-600">Nivel 2 (ID: 145804703)</p></div></div>
+                    <div class="flex items-center gap-4 p-4 bg-slate-50 rounded-lg"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751303192/descarga_2_vgfmle.png" class="h-12 w-12 object-contain"><div><h3 class="font-semibold">Certified Ethical Hacker (CEH), C|CISO</h3><p class="text-slate-600">EC-Council</p></div></div>
+                    <div class="flex items-center gap-4 p-4 bg-slate-50 rounded-lg"><img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751317382/descarga_8_ldzezq.jpg" class="h-12 w-12 object-contain"><div><h3 class="font-semibold">Experto Profesional en Ciberseguridad</h3><p class="text-slate-600">UNED</p></div></div>
+                    <div class="list-item-card md:col-span-2">
+                        <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751318640/blob_ovasng.png" alt="Logo Microsoft GPS">
+                        <div class="flex-grow">
+                            <strong>Implementación de Microsoft Defender</strong>
+                            <p class="text-slate-600 text-sm">Emitido por Microsoft Global Partner Solutions (GPS)</p>
+                            <a href="https://www.credly.com/users/juanmaperals" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline text-sm block mt-1">Ver Credencial</a>
+                        </div>
+                    </div>
+                     <div class="list-item-card md:col-span-2">
+                        <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751347491/descarga_11_mdu55o.png" alt="Logo Formación Profesional">
+                        <div class="flex-grow">
+                            <strong>Habilitación para la Docencia en Formación Profesional</strong>
+                            <p class="text-slate-600 text-sm">Certificado de Profesionalidad (SSCE0110)</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonios -->
+            <section id="testimonios" class="section-card">
+                <h2 class="text-3xl font-bold mb-6 brand-gradient-text text-center">Testimonios</h2>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="flex flex-col items-center p-4">
+                        <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751289320/WhatsApp_Image_2025-06-12_at_19.25.05_wgp1xi.jpg" alt="Logo Comisión Europea" class="h-16 mb-4">
+                        <blockquote class="italic text-slate-600">"Juan Ma transforma lo técnico en inspiración práctica y conecta la tecnología con el lado humano. Su enfoque es verdaderamente excepcional."</blockquote>
+                        <p class="font-semibold text-blue-800 mt-4">- AI & Partners, Comisión Europea</p>
+                    </div>
+                    <div class="flex flex-col items-center p-4">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/100px-Microsoft_logo_%282012%29.svg.png" alt="Logo Microsoft" class="h-16 mb-4" onerror="this.style.display='none'">
+                        <blockquote class="italic text-slate-600">"La capacidad de Juan Ma para convertir la seguridad digital en algo comprensible y aplicable para cualquier audiencia es su mayor valor. Un verdadero educador."</blockquote>
+                        <p class="font-semibold text-blue-800 mt-4">- Microsoft España</p>
+                    </div>
+                    <div class="flex flex-col items-center p-4">
+                        <img src="https://res.cloudinary.com/dwhdevibb/image/upload/v1751315943/descarga_5_usrufo.png" alt="Logo INCIBE" class="h-16 mb-4">
+                        <blockquote class="italic text-slate-600">"Como mentor, Juan Ma Perals ofrece una guía invaluable y pragmática, impulsando el crecimiento y la innovación en el ecosistema emprendedor."</blockquote>
+                        <p class="font-semibold text-blue-800 mt-4">- Equipo INCIBE Emprende</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <div id="herramientas">
+            <!-- ✨ Generador de Ideas para Colaboraciones (con IA) ✨ -->
+            <section id="gemini-collaboration" class="section-card bg-blue-50 border-2 border-blue-200">
+                <h2 class="text-3xl font-bold mb-4 brand-gradient-text">✨ Generador de Ideas para Colaboraciones</h2>
+                <p class="text-slate-600 mb-6">¿Tienes un producto o marca y quieres colaborar? Describe tu proyecto a continuación y nuestra IA generará ideas creativas y personalizadas para una posible colaboración.</p>
+                
+                <div class="mb-4">
+                    <label for="brandDescription" class="block text-slate-700 font-semibold mb-2">Describe tu marca, producto o servicio:</label>
+                    <textarea id="brandDescription" rows="4" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Ej: Somos una startup de software que crea herramientas de productividad para equipos remotos..."></textarea>
+                </div>
+
+                <button id="generateIdeasBtn" class="w-full brand-gradient text-white font-bold py-3 px-8 rounded-lg text-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+                    Generar Ideas con IA
+                </button>
+
+                <div id="ideasResult" class="mt-8 hidden">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">Aquí tienes algunas ideas:</h3>
+                    <div id="loader-ideas" class="loader"></div>
+                    <div id="ideasContent" class="text-slate-700 bg-white p-6 rounded-lg shadow-inner"></div>
+                </div>
+            </section>
+
+            <!-- 📊 Calculadora de Engagement y ROI Estimado 📊 -->
+            <section class="section-card">
+                <h2 class="text-3xl font-bold mb-6 brand-gradient-text">📊 Calculadora de Engagement y ROI</h2>
+                <p class="text-slate-600 mb-6">Estima el posible rendimiento de una colaboración. Introduce los valores para ver las métricas clave en tiempo real.</p>
+                
+                <div id="roi-calculator" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Inputs -->
+                    <div class="space-y-4">
+                        <div>
+                            <label for="followerCount" class="block text-slate-700 font-semibold mb-1">Seguidores (LinkedIn)</label>
+                            <input type="number" id="followerCount" value="140000" class="w-full p-3 border border-slate-300 rounded-lg bg-slate-50">
+                        </div>
+                        <div>
+                            <label for="engagementRate" class="block text-slate-700 font-semibold mb-1">Tasa de Engagement Estimada (%)</label>
+                            <input type="number" id="engagementRate" value="2.5" step="0.1" class="w-full p-3 border border-slate-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label for="collaborationCost" class="block text-slate-700 font-semibold mb-1">Coste de la Colaboración (€)</label>
+                            <input type="number" id="collaborationCost" value="2500" class="w-full p-3 border border-slate-300 rounded-lg">
+                        </div>
+                    </div>
+
+                    <!-- Results -->
+                    <div class="bg-blue-50 p-6 rounded-2xl border-2 border-blue-200">
+                        <h3 class="text-xl font-bold text-slate-800 mb-4">Resultados Estimados</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-600">Usuarios Enganchados:</span>
+                                <span id="engagedUsersResult" class="font-bold text-blue-700 text-lg">3,500</span>
+                            </div>
+                            <hr>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-600">Coste por Engagement (CPE):</span>
+                                <span id="cpeResult" class="font-bold text-blue-700 text-lg">0.71 €</span>
+                            </div>
+                            <hr>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-600">Alcance Estimado:</span>
+                                <span id="reachResult" class="font-bold text-blue-700 text-lg">210,000</span>
+                            </div>
+                             <hr>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-600">Coste por Mil (CPM):</span>
+                                <span id="cpmResult" class="font-bold text-blue-700 text-lg">11.90 €</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-4">*Todas las métricas son estimaciones basadas en datos estándar de la industria y pueden variar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </div>
+
+        <!-- Contacto -->
+        <footer id="contacto" class="text-center pt-12 mt-8 border-t border-slate-200">
+            <h2 class="text-3xl font-bold text-slate-900 mb-4">¡Conectemos!</h2>
+            <p class="text-slate-600 mb-8 max-w-2xl mx-auto">Para consultas de prensa, propuestas de colaboración o para agendar una reunión, utiliza los siguientes enlaces.</p>
+            <div class="flex flex-wrap justify-center items-center gap-4 mb-8">
+                 <a href="mailto:info@juanmaperals.com" class="inline-block brand-gradient text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+                    Enviar Email
+                </a>
+                 <a href="https://calendly.com/juanmaperals/reunion-30min" target="_blank" rel="noopener noreferrer" class="inline-block bg-slate-200 text-slate-800 font-bold py-3 px-8 rounded-full text-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+                    Agendar Reunión
+                </a>
+            </div>
+            <div class="flex justify-center space-x-6">
+                <a href="https://linkedin.com/in/juanmaperals" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-blue-600 transition-colors"><span class="sr-only">LinkedIn</span><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+                <a href="https://www.youtube.com/@juanmaperals" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-blue-600 transition-colors"><span class="sr-only">YouTube</span><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg></a>
+                <a href="https://x.com/JuanMaPerals" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-blue-600 transition-colors"><span class="sr-only">X (Twitter)</span><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.627l-5.21-6.815-6.041 6.815h-3.308l7.73-8.805-8.335-10.69h6.78l4.713 6.231 5.52-6.231zm-1.161 17.52h1.839l-10.542-14.03h-1.989l10.692 14.03z"/></svg></a>
+                <a href="https://www.instagram.com/juanmaperals" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-blue-600 transition-colors"><span class="sr-only">Instagram</span><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.585-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.585.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.058 1.644-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.441 1.441 1.441 1.441-.645 1.441-1.441-.645-1.44-1.441-1.44z"/></svg></a>
+            </div>
+            <p class="text-sm text-slate-400 mt-10">&copy; 2025 Juan Ma Perals. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <!-- Modal para el Post de Redes Sociales -->
+    <div id="socialPostModal" class="modal-backdrop hidden">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-slate-800">Post para Redes Sociales</h3>
+                <button id="closeModalBtn" class="text-slate-500 hover:text-slate-800 text-2xl">&times;</button>
+            </div>
+            <div id="modal-loader" class="loader"></div>
+            <div id="modal-content-area">
+                <textarea id="socialPostResult" rows="8" class="w-full p-3 border bg-slate-50 border-slate-200 rounded-lg" readonly></textarea>
+                <button id="copyPostBtn" class="mt-4 w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition">Copiar Texto</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            // --- Gemini API Integration ---
+            const generateIdeasBtn = document.getElementById('generateIdeasBtn');
+            const ideasResult = document.getElementById('ideasResult');
+            const ideasContent = document.getElementById('ideasContent');
+            const loaderIdeas = document.getElementById('loader-ideas');
+            const brandDescription = document.getElementById('brandDescription');
+            const generateSocialPostBtn = document.getElementById('generateSocialPostBtn');
+            const socialPostModal = document.getElementById('socialPostModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const copyPostBtn = document.getElementById('copyPostBtn');
+            const socialPostResult = document.getElementById('socialPostResult');
+            const modalLoader = document.getElementById('modal-loader');
+            const modalContentArea = document.getElementById('modal-content-area');
+            const bioText = document.getElementById('bio-text').textContent.trim();
+
+            async function callGemini(prompt) {
+                const apiKey = ""; // Dejar en blanco, se gestiona en el entorno
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error(`Error en la API: ${response.statusText}`);
+                    const result = await response.json();
+                    if (result.candidates && result.candidates.length > 0 && result.candidates[0].content.parts.length > 0) {
+                        return result.candidates[0].content.parts[0].text;
+                    } else {
+                        return "No se pudo generar una respuesta. Por favor, inténtalo de nuevo.";
+                    }
+                } catch (error) {
+                    console.error("Error al llamar a la API de Gemini:", error);
+                    return "Ocurrió un error al contactar con la IA. Por favor, revisa la consola para más detalles.";
+                }
+            }
+
+            if(generateIdeasBtn) {
+                generateIdeasBtn.addEventListener('click', async () => {
+                    if (!brandDescription.value.trim()) {
+                        alert("Por favor, describe tu marca o producto.");
+                        return;
+                    }
+                    ideasResult.style.display = 'block';
+                    loaderIdeas.style.display = 'block';
+                    ideasContent.style.display = 'none';
+                    const prompt = `
+                        Actúa como un experto en marketing y colaboraciones de influencers.
+                        Mi perfil es el de Juan Ma Perals: "${bioText}".
+                        Una marca potencial quiere colaborar conmigo. Su descripción es: "${brandDescription.value}".
+                        Basado en mi perfil y la descripción de la marca, genera 3 ideas de colaboración creativas y detalladas.
+                        Formatea la respuesta en HTML, usando <h4> para los títulos de las ideas y <p> para las descripciones.
+                        Sé específico y muestra cómo la colaboración beneficiaría a ambas partes.
+                    `;
+                    const ideas = await callGemini(prompt);
+                    ideasContent.innerHTML = ideas;
+                    loaderIdeas.style.display = 'none';
+                    ideasContent.style.display = 'block';
+                });
+            }
+
+            if(generateSocialPostBtn) {
+                generateSocialPostBtn.addEventListener('click', async () => {
+                    socialPostModal.style.display = 'flex';
+                    modalLoader.style.display = 'block';
+                    modalContentArea.style.display = 'none';
+                    const prompt = `
+                        Basado en la siguiente biografía de Juan Ma Perals, crea un post corto y atractivo para LinkedIn o X (antes Twitter).
+                        El post debe ser profesional, destacar sus logros clave (Comisión Europea, Ciberseguridad, IA, EdTech) e incluir hashtags relevantes.
+                        Biografía: "${bioText}"
+                    `;
+                    const postText = await callGemini(prompt);
+                    socialPostResult.value = postText;
+                    modalLoader.style.display = 'none';
+                    modalContentArea.style.display = 'block';
+                });
+            }
+
+            if(closeModalBtn) {
+                closeModalBtn.addEventListener('click', () => { socialPostModal.style.display = 'none'; });
+            }
+            if(copyPostBtn) {
+                copyPostBtn.addEventListener('click', () => {
+                    socialPostResult.select();
+                    document.execCommand('copy');
+                    copyPostBtn.textContent = '¡Copiado!';
+                    setTimeout(() => { copyPostBtn.textContent = 'Copiar Texto'; }, 2000);
+                });
+            }
+            
+            window.addEventListener('click', (event) => {
+                if (event.target == socialPostModal) {
+                    socialPostModal.style.display = 'none';
+                }
+            });
+
+            // --- Lógica para la Calculadora de ROI ---
+            const calculator = document.getElementById('roi-calculator');
+            if(calculator) {
+                const followerCountInput = document.getElementById('followerCount');
+                const engagementRateInput = document.getElementById('engagementRate');
+                const collaborationCostInput = document.getElementById('collaborationCost');
+                const engagedUsersResult = document.getElementById('engagedUsersResult');
+                const cpeResult = document.getElementById('cpeResult');
+                const reachResult = document.getElementById('reachResult');
+                const cpmResult = document.getElementById('cpmResult');
+
+                function calculateROI() {
+                    const followers = parseFloat(followerCountInput.value) || 0;
+                    const engagementRate = parseFloat(engagementRateInput.value) || 0;
+                    const cost = parseFloat(collaborationCostInput.value) || 0;
+                    const engagedUsers = followers * (engagementRate / 100);
+                    const estimatedReach = followers * 1.5;
+                    const cpe = cost > 0 && engagedUsers > 0 ? cost / engagedUsers : 0;
+                    const cpm = cost > 0 && estimatedReach > 0 ? (cost / estimatedReach) * 1000 : 0;
+                    const formatCurrency = (value) => value.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
+                    engagedUsersResult.textContent = Math.round(engagedUsers).toLocaleString('es-ES');
+                    reachResult.textContent = Math.round(estimatedReach).toLocaleString('es-ES');
+                    cpeResult.textContent = formatCurrency(cpe);
+                    cpmResult.textContent = formatCurrency(cpm);
+                }
+                calculateROI();
+                calculator.addEventListener('input', calculateROI);
+            }
+
+            // --- Lógica de Navegación ---
+            const navLinks = document.querySelectorAll('#main-nav a');
+            const sections = document.querySelectorAll('section[id], div[id]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            const href = link.getAttribute('href');
+                            link.classList.toggle('active', href.substring(1) === entry.target.id);
+                        });
+                    }
+                });
+            }, { rootMargin: "-40% 0px -60% 0px" });
+            sections.forEach(section => observer.observe(section));
+        });
+    </script>
+
+</body>
+</html>
